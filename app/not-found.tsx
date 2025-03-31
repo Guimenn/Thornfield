@@ -1,41 +1,75 @@
 'use client';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function NotFound() {
-  useEffect(() => {
-    const limparCookies = () => {
-      document.cookie.split(";").forEach((c) => {
-        document.cookie = c
-          .replace(/^ +/, "")
-          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-      });
-    };
-
-    // Limpa os cookies imediatamente
-    limparCookies();
-
-    // Configura um intervalo para limpar os cookies a cada 1 minuto
-    const intervalo = setInterval(limparCookies, 60000);
-
-    // Limpa o intervalo quando o componente for desmontado
-    return () => clearInterval(intervalo);
-  }, []);
-
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black px-4 py-24">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-amber-950 to-black px-4 py-8">
+      {/* Logo */}
+      <motion.div
+        className="relative w-80 h-80 mb-6"
+        animate={{
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
+      >
+        <Image
+          src="/Goat.png"
+          alt="Logo do site"
+          fill
+          className="object-contain"
+          priority
+        />
+      </motion.div>
+
       <div className="text-center">
-        <h1 className="text-white text-9xl font-light mb-4">404</h1>
-        <h2 className="text-white text-2xl font-light mb-8">Página não encontrada</h2>
-        <p className="text-white text-base font-light mb-8">
-          Desculpe, a página que você está procurando não existe.
-        </p>
-        <Link 
-          href="/" 
-          className="bg-transparent text-white underline text-2xl rounded-md p-2 underline-offset-4 hover:opacity-80 transition-opacity"
+        <motion.div className="relative">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-amber-500 text-[12rem] font-light mb-2"
+          >
+            404
+          </motion.h1>
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-amber-200 text-2xl font-light mb-2"
         >
-          Voltar para a página inicial
-        </Link>
+          Parece que o whisky acabou...
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="text-amber-100 text-base font-light mb-6 max-w-md mx-auto"
+        >
+          Esta página está tão vazia quanto um copo de whisky derramado.
+          Vamos voltar e encher um novo copo?
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Link
+            href="/"
+            className="inline-block bg-amber-900/50 text-amber-200 text-lg rounded-full px-6 py-3 hover:bg-amber-800/50 transition-all duration-300 border border-amber-700/30"
+          >
+            Voltar para o showroom
+          </Link>
+        </motion.div>
       </div>
     </main>
   );

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './Entrada.css';
 
 interface AgeGateProps {
@@ -10,14 +10,6 @@ export default function AgeGate({ onAgeVerified }: AgeGateProps) {
     const [dia, setDia] = useState('');
     const [mes, setMes] = useState('');
     const [ano, setAno] = useState('');
-
-    // Verifica se já existe idade salva nos cookies
-    useEffect(() => {
-        const idadeVerificada = document.cookie.split('; ').find(row => row.startsWith('idadeVerificada='));
-        if (idadeVerificada) {
-            onAgeVerified();
-        }
-    }, [onAgeVerified]);
 
     const MensagemErro = (mensagem: string) => {
         const elemento = document.getElementById('MensagemErro');
@@ -75,11 +67,6 @@ export default function AgeGate({ onAgeVerified }: AgeGateProps) {
             return;
         }
 
-        // Salva a idade nos cookies (expira em 1 minuto)
-        const dataExpiracao = new Date();
-        dataExpiracao.setMinutes(dataExpiracao.getMinutes() + 1);
-        document.cookie = `idadeVerificada=true; expires=${dataExpiracao.toUTCString()}; path=/`;
-
         // Primeiro, adiciona fade-out em todos os textos
         ['text-welcome', 'text-terms', 'text-awards', 'input-date', 'MensagemErro', 'ButtonSite'].forEach(id => {
             const element = document.getElementById(id);
@@ -133,7 +120,7 @@ export default function AgeGate({ onAgeVerified }: AgeGateProps) {
                 </div>
                 <button id='ButtonSite' className='bg-transparent text-white underline text-2xl rounded-md p-2 underline-offset-4 my-6' onClick={VerificarIdade}>ENTER SITE</button>
                 <p className='text-white text-xl font-light text-wrap w-[80%] text-center' id='text-terms'>
-                    Você deve ter cookies habilitados para usar este site. Para mais informações sobre como excluir ou controlar cookies, visite www.aboutcookies.org. Ao entrar neste site, você concorda <br />com nossos <a href="#" className='underline'>Termos e Condições</a> e <a href="#" className='underline'>Aviso de Privacidade e Cookies.</a>
+                    Ao entrar neste site, você concorda com nossos <a href="#" className='underline'>Termos e Condições</a> e <a href="#" className='underline'>Aviso de Privacidade</a>.
                 </p>
                 <p className='text-white text-base font-light text-wrap w-[80%] text-center' id='text-awards'>
                     *A linha Thornfield recebeu mais prêmios desde 2000 do que qualquer outro whisky single malt em duas das competições mais prestigiadas do mundo, a International Wine & Spirit Competition e o International Spirits Challenge.
