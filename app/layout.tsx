@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./Components/Navbar/Navbar";
+import ClientLayout from "./Components/ClientLayout";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -14,14 +15,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Verifica se a página atual é a de verificação de idade
-  const isAgeGatePage = typeof window !== 'undefined' && window.location.pathname === '/verificaridade';
-
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        {!isAgeGatePage && <Navbar />} {/* Renderiza a Navbar apenas se não for a página de verificação de idade */}
-        {children}
+        <ClientLayout>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );

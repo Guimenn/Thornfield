@@ -178,26 +178,4 @@
 .age-gate-container.fade-out {
 	opacity: 0;
 	transition: opacity 0.5s ease-out;
-}
-
-/* Estilos para esconder o header */
-.hide-header ~ header,
-.hide-header + header,
-header {
-    display: none !important;
-}
-
-/* Estilos do layout */
-.age-gate-layout {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-}
-
-/* Esconde o header global */
-:global(header) {
-    display: none !important;
 } 

@@ -1,12 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Entrada.css';
 
 export default function AgeGate() {
-
     const [dia, setDia] = useState('');
     const [mes, setMes] = useState('');
     const [ano, setAno] = useState('');
+    const [animationComplete, setAnimationComplete] = useState(false);
 
     const MensagemErro = (mensagem: string) => {
         const elemento = document.getElementById('MensagemErro');
@@ -21,6 +21,19 @@ export default function AgeGate() {
             elemento.innerHTML = mensagem;
         }
     }
+
+    // Este efeito dispara o evento quando a animação termina
+    useEffect(() => {
+        if (animationComplete) {
+            // Salva no localStorage que o usuário verificou a idade
+            // Comentado para desenvolvimento
+            // localStorage.setItem('ageVerified', 'true');
+            
+            // Dispara um evento personalizado para notificar outros componentes
+            const ageVerifiedEvent = new CustomEvent('ageVerified', { detail: true });
+            window.dispatchEvent(ageVerifiedEvent);
+        }
+    }, [animationComplete]);
 
     const VerificarIdade = () => {
         if (!dia || !mes || !ano) {
@@ -91,9 +104,7 @@ export default function AgeGate() {
                 container.classList.add('fade-out');
                 // Espera o fade-out terminar antes de mostrar a página principal
                 setTimeout(() => {
-                    if (container.parentElement) {
-                        container.parentElement.removeChild(container);
-                    }
+                    setAnimationComplete(true);
                 }, 500);
             }
         }, 2800);
