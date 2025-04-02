@@ -2,11 +2,8 @@
 import { useState } from 'react';
 import './Entrada.css';
 
-interface AgeGateProps {
-    onAgeVerified: () => void;
-}
+export default function AgeGate() {
 
-export default function AgeGate({ onAgeVerified }: AgeGateProps) {
     const [dia, setDia] = useState('');
     const [mes, setMes] = useState('');
     const [ano, setAno] = useState('');
@@ -94,7 +91,9 @@ export default function AgeGate({ onAgeVerified }: AgeGateProps) {
                 container.classList.add('fade-out');
                 // Espera o fade-out terminar antes de mostrar a página principal
                 setTimeout(() => {
-                    onAgeVerified();
+                    if (container.parentElement) {
+                        container.parentElement.removeChild(container);
+                    }
                 }, 500);
             }
         }, 2800);
