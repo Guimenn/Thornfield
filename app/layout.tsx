@@ -14,10 +14,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Verifica se a página atual é a de verificação de idade
+  const isAgeGatePage = typeof window !== 'undefined' && window.location.pathname === '/verificaridade';
+
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        <Navbar />
+        {!isAgeGatePage && <Navbar />} {/* Renderiza a Navbar apenas se não for a página de verificação de idade */}
         {children}
       </body>
     </html>
